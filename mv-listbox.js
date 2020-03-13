@@ -25,21 +25,19 @@ export class MvListbox extends LitElement {
         font-size: var(--font-size-m, 1rem);
         --item-padding: var(--mv-listbox-item-padding, auto);
         --light-background: var(--mv-listbox-background, #ffffff);
-        --light-color: var(--mv-listbox-light-color, #000000);        
+        --light-color: var(--mv-listbox-light-color, #000000);
         --dark-background: var(--mv-listbox-dark-background, #373e48);
-        --dark-color: var(--mv-listbox-dark-color, #ffffff);        
+        --dark-color: var(--mv-listbox-dark-color, #ffffff);
       }
 
       section {
-        color: var(--color);
-        background-color: var(--background-color);
-        margin: var(--mv-listbox-margin, 20px auto);
+        min-height: auto;
+        max-height: auto;
+        min-width: var(--mv-listbox-min-width, auto);
+        max-width: var(--mv-listbox-max-width, 500px);
+        margin: var(--mv-listbox-margin, 20px);
         padding: var(--mv-listbox-padding, 20px);
         border: var(--mv-listbox-border, 1px solid #bfbfbf);
-        min-width: var(--mv-listbox-min-width, 300px);
-        max-width: var(--mv-listbox-max-width, 500px);
-        min-height: var(--mv-listbox-min-height, auto);
-        max-height: var(--mv-listbox-max-height, auto);
         box-shadow: var(--mv-listbox-shadow, 0 0 13px 0 rgba(42, 42, 42, 0.65));
       }
 
@@ -140,23 +138,8 @@ export class MvListbox extends LitElement {
   }
 
   render() {
-    const {
-      theme,
-      list,
-      showLabel,
-      label,
-      group,
-      item,
-      footer,
-      open,
-      disabled,
-      selected,
-      custom
-    } = this;
-    const openClass = open ? " open" : " close";
-    const disabledClass = disabled ? " disabled" : "";
-    const selectedClass = selected ? " selected" : "";
-    const itemClass = `${disabledClass || selectedClass}`;
+    const { theme, list, label, group, item, footer, open, custom } = this;
+    const openClass = open ? "open" : "close";
     if (list) {
       return html`
         <section class="mv-listbox ${theme}">
@@ -181,34 +164,23 @@ export class MvListbox extends LitElement {
       `;
     } else if (group) {
       return html`
-        <li class="${openClass}${itemClass}" @click="${this.handleOpenMenu}">
-          <div class="sub-listbox${openClass}">
-            <div class="listbox-label-group${openClass}">
-              <div class="listbox-label">
-                <slot name="listbox-label"></slot>
-              </div>
-              ${!custom
-                ? html`
-                    <i class="${`listbox-group-dropdown-icon${openClass}`}"></i>
-                  `
-                : html``}
-            </div>
-            ${open
-              ? html`
-                  <ul>
-                    <slot></slot>
-                  </ul>
-                `
-              : html``}
+        <li class="${openClass}" @click="${this.handleOpenMenu}">
+          <div class="listbox-label">
+            <slot name="listbox-label"></slot>
           </div>
+          ${open
+            ? html`
+                <ul>
+                  <slot></slot>
+                </ul>
+              `
+            : html``}
         </li>
       `;
     } else if (item) {
       return html`
-        <li class="${itemClass}" @click="${this.handleItemClick}">
-          <div>
-            <slot></slot>
-          </div>
+        <li @click="${this.handleItemClick}">
+          <slot></slot>
         </li>
       `;
     } else if (footer) {
@@ -222,7 +194,7 @@ export class MvListbox extends LitElement {
 
   connectedCallback() {
     //initialize
-    if (this.open === undefined && (this.group || this.listbox)) {
+    if (this.open === undefined && (this.group || this.list)) {
       this.open = !this.group;
     }
     super.connectedCallback();
@@ -236,11 +208,8 @@ export class MvListbox extends LitElement {
   };
 
   handleOpenMenu = originalEvent => {
-    const { custom, open, value } = this;
-    if (!custom) {
-      originalEvent.stopPropagation();
-      this.open = !open;
-    }
+    const { open, value } = this;
+    this.open = !open;
     this.dispatchEvent(
       new CustomEvent("select-group", { detail: { value, originalEvent } })
     );
