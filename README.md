@@ -24,7 +24,7 @@ To experiment with the MvListbox component.
   >Main label</mv-listbox>
   <mv-listbox
     item                      // this marks a list item
-  >Group item</mv-listbox>
+  >Main item</mv-listbox>
   <mv-listbox
     group                     // this marks a group
     open                      // this indicates whether the group is open or not, when open, its contents are
