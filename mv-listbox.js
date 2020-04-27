@@ -30,18 +30,6 @@ export class MvListbox extends LitElement {
         --dark-color: var(--mv-listbox-dark-color, #ffffff);
       }
 
-      section {
-        min-height: auto;
-        max-height: auto;
-        min-width: var(--mv-listbox-min-width, auto);
-        max-width: var(--mv-listbox-max-width, 500px);
-        margin: var(--mv-listbox-margin, 20px);
-        padding: var(--mv-listbox-padding, 20px);
-        border: var(--mv-listbox-border, 1px solid #bfbfbf);
-        box-shadow: var(--mv-listbox-shadow, 0 0 13px 0 rgba(42, 42, 42, 0.65));
-        border-radius: var(--mv-listbox-border-radius, 10px);
-      }
-
       ul {
         margin: 0;
         padding: 0;
@@ -53,6 +41,18 @@ export class MvListbox extends LitElement {
 
       li ::slotted(*) {
         padding: var(--item-padding);
+      }
+
+      .mv-listbox {
+        min-height: auto;
+        max-height: auto;
+        min-width: var(--mv-listbox-min-width, auto);
+        max-width: var(--mv-listbox-max-width, 500px);
+        margin: var(--mv-listbox-margin, 20px);
+        padding: var(--mv-listbox-padding, 20px);
+        border: var(--mv-listbox-border, 1px solid #bfbfbf);
+        box-shadow: var(--mv-listbox-shadow, 0 0 13px 0 rgba(42, 42, 42, 0.65));
+        border-radius: var(--mv-listbox-border-radius, 10px);
       }
 
       .light {
@@ -143,7 +143,7 @@ export class MvListbox extends LitElement {
     const openClass = open ? "open" : "close";
     if (list) {
       return html`
-        <section class="mv-listbox ${theme}">
+        <div class="mv-listbox ${theme}">
           <div
             class="listbox-header ${theme}"
             @click="${this.handleHeaderClick}"
@@ -154,9 +154,9 @@ export class MvListbox extends LitElement {
             <slot></slot>
           </ul>
           <div class="footer">
-            <slot name="footer"></slot>
+            <slot name="footer">&nbsp;</slot>
           </div>
-        </section>
+        </div>
       `;
     } else if (label) {
       this.setAttribute("slot", "listbox-label");
