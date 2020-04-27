@@ -14,7 +14,7 @@ export class MvListbox extends LitElement {
 
       //  valid theme values are: "light", "dark"
       //    default: "light"
-      theme: { type: String, attribute: true }
+      theme: { type: String, attribute: true },
     };
   }
 
@@ -39,6 +39,7 @@ export class MvListbox extends LitElement {
         padding: var(--mv-listbox-padding, 20px);
         border: var(--mv-listbox-border, 1px solid #bfbfbf);
         box-shadow: var(--mv-listbox-shadow, 0 0 13px 0 rgba(42, 42, 42, 0.65));
+        border-radius: var(--mv-listbox-border-radius, 10px);
       }
 
       ul {
@@ -153,15 +154,13 @@ export class MvListbox extends LitElement {
             <slot></slot>
           </ul>
           <div class="footer">
-            <slot name="footer">&nbsp;</slot>
+            <slot name="footer"></slot>
           </div>
         </section>
       `;
     } else if (label) {
       this.setAttribute("slot", "listbox-label");
-      return html`
-        <slot></slot>
-      `;
+      return html` <slot></slot> `;
     } else if (group) {
       return html`
         <li class="${openClass}" @click="${this.handleOpenMenu}">
@@ -185,9 +184,7 @@ export class MvListbox extends LitElement {
       `;
     } else if (footer) {
       this.setAttribute("slot", "footer");
-      return html`
-        <slot></slot>
-      `;
+      return html` <slot></slot> `;
     }
     return html``;
   }
@@ -200,14 +197,14 @@ export class MvListbox extends LitElement {
     super.connectedCallback();
   }
 
-  handleHeaderClick = originalEvent => {
+  handleHeaderClick = (originalEvent) => {
     const { value } = this;
     this.dispatchEvent(
       new CustomEvent("select-header", { detail: { value, originalEvent } })
     );
   };
 
-  handleOpenMenu = originalEvent => {
+  handleOpenMenu = (originalEvent) => {
     const { open, value } = this;
     this.open = !open;
     this.dispatchEvent(
@@ -215,7 +212,7 @@ export class MvListbox extends LitElement {
     );
   };
 
-  handleItemClick = originalEvent => {
+  handleItemClick = (originalEvent) => {
     const { value, disabled } = this;
     if (!!value && !disabled) {
       this.dispatchEvent(
