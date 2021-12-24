@@ -1,0 +1,22 @@
+{
+  "name": "@meveo-org/mv-listbox",
+  "version": "1.0.0",
+  "description": "MvListbox is a Meveo listbox component (based on lit-element) that renders a list of items.",
+  "main": "mv-listbox.js",
+  "scripts": {
+    "serve": "es-dev-server --node-resolve --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meveo-org/mv-listbox.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/meveo-org/mv-listbox/issues"
+  },
+  "homepage": "https://github.com/meveo-org/mv-listbox#readme",
+  "devDependencies": {
+    "es-dev-server": "^1.46.1"
+  }
+}
