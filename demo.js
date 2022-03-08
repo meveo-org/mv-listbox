@@ -1,4 +1,4 @@
-import { LitElement, html, css } from "lit-element";
+import { LitElement, html, css } from "lit";
 import "./mv-listbox.js";
 
 import FF_CHARACTERS from "./data/ff-characters.json";
